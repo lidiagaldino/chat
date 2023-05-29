@@ -5,7 +5,7 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import http from "http";
 import messageRoutes from "./routes/messageRoutes";
 import mongoose from "mongoose";
-import messageModel from "./model/messageModel";
+require("dotenv").config();
 
 class App {
   public app: express.Application;
@@ -32,11 +32,7 @@ class App {
   }
 
   private middleware() {
-    mongoose
-      .connect(
-        "mongodb+srv://lidiagabrielly14:lidia123@cluster0.5gosdtu.mongodb.net/"
-      )
-      .then(() => console.log("oiiii"));
+    mongoose.connect(process.env.DATABASE).then(() => console.log("oiiii"));
     this.enableCors();
     this.io = new Server(this.httpServer, {
       cors: {
