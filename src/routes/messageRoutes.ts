@@ -1,9 +1,18 @@
-import { Router } from 'express'
-import MessageController from '../controller/MessageController'
+import { Router } from "express";
+import MessageController from "../controller/MessageController";
+import { auth } from "../middleware/auth";
+import { validation } from "../middleware/validation";
+import { messageBodyValidation } from "../schema/message";
 
-const routes = Router()
+const routes = Router();
 
-routes.get('/', MessageController.getMessage)
-routes.post('/', MessageController.storeMessage)
+routes.get("/:id_to", auth, MessageController.getMessage);
 
-export default routes
+routes.post(
+  "/",
+  auth,
+  validation({ body: messageBodyValidation }),
+  MessageController.storeMessage
+);
+
+export default routes;
