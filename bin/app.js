@@ -9,6 +9,7 @@ const socket_io_1 = require("socket.io");
 const http_1 = __importDefault(require("http"));
 const messageRoutes_1 = __importDefault(require("./routes/messageRoutes"));
 const mongoose_1 = __importDefault(require("mongoose"));
+require("dotenv").config();
 class App {
     constructor() {
         this.app = (0, express_1.default)();
@@ -24,9 +25,7 @@ class App {
         this.app.use((0, cors_1.default)(options));
     }
     middleware() {
-        mongoose_1.default
-            .connect("mongodb+srv://lidiagabrielly14:lidia123@cluster0.5gosdtu.mongodb.net/")
-            .then(() => console.log("oiiii"));
+        mongoose_1.default.connect(process.env.DATABASE_MONGO).then(() => console.log("oiiii")).catch((err) => console.log(err));
         this.enableCors();
         this.io = new socket_io_1.Server(this.httpServer, {
             cors: {

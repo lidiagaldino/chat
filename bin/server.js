@@ -9,7 +9,7 @@ const port = normalizePort(process.env.PORT || "3000");
 console.log(port);
 app_1.default.io.on("connection", (socket) => {
     console.log(`CLIENTE CONECTADO ${socket.id}`);
-    let decoded = { id_usuario: 0, id_modo: 0, user_type: 'GERADOR' };
+    let decoded = { id_usuario: 0, id_modo: 0, user_type: "GERADOR" };
     if (!socket.handshake.auth || !socket.handshake.auth.token)
         socket.disconnect();
     try {
@@ -27,7 +27,7 @@ app_1.default.io.on("connection", (socket) => {
         socket.disconnect();
     }
     socket.on("send-msg", (data) => {
-        socket.to(data.to).emit("msg-recieve", data.msg);
+        socket.to(`user_${data.to}`).emit("msg-recieve", data.msg);
     });
 });
 app_1.default.httpServer.listen(port, () => console.log("App rodando"));

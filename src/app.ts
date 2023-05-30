@@ -32,7 +32,8 @@ class App {
   }
 
   private middleware() {
-    mongoose.connect(process.env.DATABASE).then(() => console.log("oiiii"));
+    mongoose.connect(process.env.DATABASE_MONGO).then(() => console.log("oiiii")).catch((err) => console.log(err)
+    );
     this.enableCors();
     this.io = new Server(this.httpServer, {
       cors: {
