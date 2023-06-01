@@ -23,11 +23,15 @@ class Message {
 
   public async getMessage(data: { from: number; to: number }) {
     const messages = await Messages.find({
-      from: data.from,
-      to: data.to,
+      $and: [
+        { $or: [{ from: 1 }, { from: 3 }] },
+        { $or: [{ to: 1 }, { to: 3 }] },
+      ],
     }).sort({ updatedAt: 1 });
 
-    return messages ? messages : false;
+    console.log(messages);
+
+    return messages.length > 0 ? messages : false;
   }
 }
 
