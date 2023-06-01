@@ -24,8 +24,8 @@ class Message {
   public async getMessage(data: { from: number; to: number }) {
     const messages = await Messages.find({
       $and: [
-        { $or: [{ from: 1 }, { from: 3 }] },
-        { $or: [{ to: 1 }, { to: 3 }] },
+        { $or: [{ from: data.from }, { from: data.to }] },
+        { $or: [{ to: data.from }, { to: data.to }] },
       ],
     }).sort({ updatedAt: 1 });
 
