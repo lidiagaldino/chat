@@ -34,10 +34,13 @@ class Message {
     getMessage(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const messages = yield messageModel_1.default.find({
-                from: data.from,
-                to: data.to,
+                $and: [
+                    { $or: [{ from: data.from }, { from: data.to }] },
+                    { $or: [{ to: data.from }, { to: data.to }] },
+                ],
             }).sort({ updatedAt: 1 });
-            return messages ? messages : false;
+            console.log(messages);
+            return messages.length > 0 ? messages : false;
         });
     }
 }
